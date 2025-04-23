@@ -1,0 +1,27 @@
+##
+## Authentication processes
+##
+
+# Disable LOGIN command and all other plaintext authentications unless
+# SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP
+# matches the local IP (ie. you're connecting from the same computer), the
+# connection is considered secure and plaintext authentication is allowed.
+disable_plaintext_auth = no
+
+# Authentication mechanisms to offer to clients
+auth_mechanisms = plain login
+
+##
+## Password and user databases
+##
+
+passdb {
+  driver = pam
+}
+
+userdb {
+  driver = passwd
+}
+
+# Use system users and groups for authentication
+!include auth-system.conf.ext

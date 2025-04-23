@@ -9,19 +9,51 @@
     state: present
     update_cache: yes
 
-- name: Create virtual mail directory
+- name: Create vmail group
+  group:
+    name: vmail
+    gid: 5000
+    state: present
+
+- name: Create vmail user
+  user:
+    name: vmail
+    uid: 5000
+    group: vmail
+    home: /var/mail/vhosts
+    shell: /sbin/nologin
+    create_home: no
+    system: yes
+
+- name: Create virtual mail directories
   file:
-    path: /var/mail/vhosts/grants.qfab.org
+    path: "/var/mail/vhosts/grants.qfab.org/{{ item }}/Maildir"
     state: directory
     owner: vmail
     group: vmail
     mode: '0750'
+    recurse: yes
+  with_items:
+    - postmaster
+    - bot
+
+- name: Create Maildir subdirectories for users
+  file:
+    path: "/var/mail/vhosts/grants.qfab.org/{{ item[0] }}/Maildir/{{ item[1] }}"
+    state: directory
+    owner: vmail
+    group: vmail
+    mode: '0750'
+  with_nested:
+    - ['postmaster', 'bot']
+    - ['cur', 'new', 'tmp']
 
 - name: Create virtual mailbox map
   copy:
     content: |
       # Virtual mailbox mappings
-      @grants.qfab.org grants.qfab.org/
+      postmaster@grants.qfab.org grants.qfab.org/postmaster/
+      bot@grants.qfab.org grants.qfab.org/bot/
     dest: /etc/postfix/vmailbox
     owner: root
     group: root
@@ -31,7 +63,8 @@
   copy:
     content: |
       # Virtual alias mappings
-      postmaster@grants.qfab.org postmaster
+      postmaster@grants.qfab.org postmaster@grants.qfab.org
+      bot@grants.qfab.org bot@grants.qfab.org
     dest: /etc/postfix/virtual
     owner: root
     group: root
@@ -66,5 +99,29 @@
 - name: Ensure Postfix service is running and enabled
   service:
     name: postfix
+    state: started
+    enabled: yes
+
+- name: Configure Dovecot authentication
+  template:
+    src: 10-auth.conf.j2
+    dest: /etc/dovecot/conf.d/10-auth.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart dovecot
+
+- name: Configure Dovecot master configuration
+  template:
+    src: 10-master.conf.j2
+    dest: /etc/dovecot/conf.d/10-master.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart dovecot
+
+- name: Ensure Dovecot service is running and enabled
+  service:
+    name: dovecot
     state: started
     enabled: yes
