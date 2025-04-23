@@ -1,0 +1,20 @@
+---
+# Postfix configuration
+postfix_myhostname: "{{ ansible_fqdn }}"
+postfix_mydomain: "{{ ansible_domain }}"
+postfix_myorigin: "{{ postfix_mydomain }}"
+postfix_mydestination: "{{ postfix_myhostname }}, localhost.{{ postfix_mydomain }}, localhost"
+postfix_mynetworks: "127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128"
+postfix_home_mailbox: Maildir/
+postfix_mailbox_command: ""
+
+# Mailbox settings
+postfix_mailbox_size_limit: 51200000
+postfix_message_size_limit: 10240000
+
+# Security settings
+postfix_smtpd_tls_cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+postfix_smtpd_tls_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+postfix_smtpd_use_tls: yes
+postfix_smtpd_tls_session_cache_database: btree:${data_directory}/smtpd_scache
+postfix_smtp_tls_session_cache_database: btree:${data_directory}/smtp_scache

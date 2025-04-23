@@ -1,0 +1,6 @@
+---
+- name: Deploy Postfix Mail Server
+  hosts: mail_servers
+  become: true
+  roles:
+    - postfix

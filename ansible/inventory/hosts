@@ -1,0 +1,10 @@
+[mail_servers]
+# Add your mail server hostnames or IP addresses here
+# Example:
+# mail.example.com
+# 192.168.1.100
+grants.qfab.org
+
+[mail_servers:vars]
+ansible_ssh_user=ubuntu
+ansible_ssh_private_key_file=~/.ssh/qcif
