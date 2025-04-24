@@ -1,0 +1,208 @@
+Return-Path: <c.hyde@qcif.edu.au>
+Authentication-Results: be3.s3.ax.email;
+ dkim=pass header.d=qcif.edu.au header.b="VqeoSddQ"
+Authentication-Results: be3.s3.ax.email;
+ spf=pass smtp.mailfrom=c.hyde@qcif.edu.au
+Received: from fe.s4.ax.email (10.40.10.220) by be3.s3.ax.email (Axigen)
+ with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS id 356BC3;
+ Fri, 25 Apr 2025 05:51:54 +1000
+Authentication-Results: fe.s4.ax.email;
+ dkim=pass header.d=qcif.edu.au header.b="VqeoSddQ"
+Received: from in2.mxs.au (10.40.10.201) by fe.s4.ax.email (Axigen)
+ with (ECDHE-RSA-AES128-GCM-SHA256 encrypted) ESMTPS id 1D6E57;
+ Fri, 25 Apr 2025 05:51:54 +1000
+Received: from SY5PR01CU010.outbound.protection.outlook.com
+ (mail-australiaeastazon11022143.outbound.protection.outlook.com
+ [40.107.40.143])	by mx.mxs.au (Halon) with ESMTPS
+	id 906f230f-2145-11f0-8254-9fb0432dd8cc;
+	Fri, 25 Apr 2025 05:51:50 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pOLfDxa76hElnQ5fA70UQdDC/cyA/Dz6/zNJhT2H1d9on/OmRepnKOZPMlkhRd3/nk0KMEXuE9/QvorL6tpu10fZBi2xDj30p4iv9/qHqbQzfjVx1M0kk9c1fqtrHVdhnC02uCZ6i9XyCRQZ3aW8rINvLlec6ui6eYPSPpU004VnOiFEDgyWfXvzbPMWEib+85HFi1wPY/ecxQSA9bIuICDOtlS3QqpmF8HvnDSybhI9pEf0M+Pf/E3gBYB0GAs+eialLaOlr5wrXhjoikSEoxZNddwSbyYaT2lnsW33FdWyBX9kDKdo0DtGpAEN6V2vBUmE18LIKRg2565tH29Nkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YG8kxSRI/40M2OaKBZT7PweiboLgD3cJQRK8kKfPVs8=;
+ b=Qd0SudVdiv+5zktIsTqfL2m5HdTD0OMSnZFdu/HwU9GI6yKqk4GWMFWdlHQ5bDYlBj7kUuQOAUxXl6AhR6WCGTSFIm7GX6x23rULq+nS/iaW6+MTgkFl9P84NZIrt9fMCPfk+tffNkhPCe/RMk+I45C6WoZi+AjTuClV3ZtxAwisNVxFe7G2xIXkxJpVK7/Pw8U/5VQ9Cf9ukHxUjQsVSktGNJ5buRHx7tW8hZyGWb8K8QjcyAle7Mhmc3I9WMoeVdC037lnbosOvh9f5qEjHw94/VhPeeerpfPnewTwDIPzbREV3NnbEKJlkQJ8SwTYQwPS01LtjDVkKG+XfaQd1w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1;
+ spf=pass smtp.mailfrom=qcif.edu.au;
+ dmarc=pass action=none header.from=qcif.edu.au;
+ dkim=pass header.d=qcif.edu.au; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qcif.edu.au;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YG8kxSRI/40M2OaKBZT7PweiboLgD3cJQRK8kKfPVs8=;
+ b=VqeoSddQ4Xp+77+n76FJhHO95zzjPYMDrCkWa+6J4/KDNTaXuX3SVLdE0So+I3x7sBDrdLmyJuY9JyUH9z86TA7pKpcfPt9OgyJrpMeo0KuWNf0VMMk1yj7OaNP3gO6ZxHCyO/gGnhEViJl7kqI7cyu+Kkot/npOnjaZE9HhiSs=
+Received: from SYBPR01MB6872.ausprd01.prod.outlook.com (2603:10c6:10:14b::10)
+ by SY2PPF884CCEC06.ausprd01.prod.outlook.com (2603:10c6:18::2a2)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.27;
+ Thu, 24 Apr 2025 19:51:47 +0000
+Received: from SYBPR01MB6872.ausprd01.prod.outlook.com
+ ([fe80::3fba:8813:ed85:d037])
+ by SYBPR01MB6872.ausprd01.prod.outlook.com ([fe80::3fba:8813:ed85:d037%7])
+ with mapi id 15.20.8678.025; Thu, 24 Apr 2025 19:51:47 +0000
+From: Cameron Hyde <c.hyde@qcif.edu.au>
+To: "chyde@neoformit.com" <chyde@neoformit.com>
+Subject: AusTender - New business opportunities and/or Planned Procurements
+ [SEC=OFFICIAL]
+Thread-Topic: AusTender - New business opportunities and/or Planned
+ Procurements [SEC=OFFICIAL]
+Thread-Index: AQHbtUnBZIUPH3PF/U2gWC0H45m5XLOzOdwO
+Date: Thu, 24 Apr 2025 19:51:47 +0000
+Message-ID: <SYBPR01MB6872C22DC3A828D68E8F8F84DA852@SYBPR01MB6872.ausprd01.prod.outlook.com>
+References: <01080196692312f7-58dfe4fe-8056-47a1-9b16-c8a5d5fd5283-000000@ap-southeast-2.amazonses.com>
+In-Reply-To: <01080196692312f7-58dfe4fe-8056-47a1-9b16-c8a5d5fd5283-000000@ap-southeast-2.amazonses.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=qcif.edu.au;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SYBPR01MB6872:EE_|SY2PPF884CCEC06:EE_
+x-ms-office365-filtering-correlation-id: 75b89be4-ee4e-46b8-480d-08dd83697296
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|10070799003|1800799024|376014|366016|41320700013|4053099003|8096899003|38070700018;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?uEJEFQdk90xYbCi6oXybD9w9k+2LMyQ5jILqICiLn3I+lj9VP+irLG9USK?=
+ =?iso-8859-1?Q?tOo2MT/N3oEcsWriIUz+SnPaEAeZqkbVqvq+IzIKLN0BYJM7QBUBPbk3ua?=
+ =?iso-8859-1?Q?bMZI/p+e6zhxZ+2LOGu1EsmIJfig4ZI0refoDpg/yRkIJXiTE32a6LOuj6?=
+ =?iso-8859-1?Q?E41zC4o5qFHfxixbwXb/sh4ko/qCm19PyCzie6OKXeFIvDDv2Wy46CHep+?=
+ =?iso-8859-1?Q?mqWy9jPSy1CVEflW/aCIzwz6BiwGJcxgA+jGu0YaUNSAyZn+N0dp+pXJHe?=
+ =?iso-8859-1?Q?KSL4hSc6L5jV/AyYSV6Nh59WyETldi5pG8eZ4DD06hwSDIVp35c0Ct2/S8?=
+ =?iso-8859-1?Q?YzQX6uZzduxk7PCTjXqqdfd3guvTLRQFBoRM4ALm5fopfeDhrMPCnsYnEd?=
+ =?iso-8859-1?Q?/nso8QTWW5F+8FOzwQqROZ+IQ+i7wu6PoOtU2fnKcUnMzMgx9Dz2tzegmz?=
+ =?iso-8859-1?Q?gLNPjFWvKqbFJdE6F/LJduYftM1xDc01vOvQDHWRON934C3ZXlm8j1EHah?=
+ =?iso-8859-1?Q?MaqHDgsmauovlfVli+fKId9eQFQJerCVlNxbtZGkVmvwGXa76Qb3U/6uHY?=
+ =?iso-8859-1?Q?Mqn7ZU4+Aab86uU2j7FV4HhcTlmT7uTaZXAK6p/3C5M3d/VEG2SVeMPLXD?=
+ =?iso-8859-1?Q?HqmvWJaIZqgSPY5ZAwrM5y/SmTFGHveaa3NPyDiLEOwV6ICXD3gFwpGALk?=
+ =?iso-8859-1?Q?/xeLeDFlX2QEoee02tYBpRLaQIpM3o6nXFCTaa2SQ4DoasCwuNhFh+E77O?=
+ =?iso-8859-1?Q?nfEbK6zhSpy9nvPCm1RxxTuQX7bhKgXY4qCVoC/I6bqgoo/7kBGLUBSPTw?=
+ =?iso-8859-1?Q?D0NdliJAcsnGz1UcDY0irE3WSvFgUMfm/bpzGQ2CDprIlYYUGZUGAKr3px?=
+ =?iso-8859-1?Q?mMtJs8LmQNP0harqUvjIf8wOKN3ioIutch+swf/03Y7X1fEjXXhV51RBlN?=
+ =?iso-8859-1?Q?xzs6XL4CRkVGon7uq4/u7lTCvv4DS/9rHVKAfx3lZErnhlKE6TKhUbt0Ra?=
+ =?iso-8859-1?Q?7ZMsRD+fhv4Yk65AC8KfC9I1pTa8v4oSyT8cmnEuf2jbc655RBGKLcCRA7?=
+ =?iso-8859-1?Q?AeHVpAHRvZqliSXP40yuuzvd6hTNbHbCL6+U7iVbiUCX2etjsINKAl4Yfi?=
+ =?iso-8859-1?Q?qUE6TCs6gVkTDnR2R0rxPEHAwDOW5AeKXT9RgD1+eK3XO3x5BgSMYPU7JA?=
+ =?iso-8859-1?Q?mKtZaFlH1xpCOwk1xSH0iU6XaKqqtHmtsMdTi6vKZiZAftcSImEsjoRIgJ?=
+ =?iso-8859-1?Q?VLcEwiPtoHFEuLYfOR4odcdwtVM3qNIz5AMaUATbcAWToAkxuZDfF0HAqq?=
+ =?iso-8859-1?Q?DDTVEu/sxleMWoJUACI2qsWbIDfnpG2IpoyJ8vdbIkymwmqK+zBReKKodv?=
+ =?iso-8859-1?Q?rON0B93CeP3HRHKOugKTghv1cbTlQSs9qUDAaUPpd+0vwr65cdyLTyFBvf?=
+ =?iso-8859-1?Q?DcKDwGkecv9Nah3XIggt4DPcuAf+sgNF6yHsW9ZBR3zlSSUeSqnnjISlxW?=
+ =?iso-8859-1?Q?mDg0XBoGUT9bK5HCVv5eBUFtQp+R5+71bl8eHna3PSsA=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SYBPR01MB6872.ausprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(376014)(366016)(41320700013)(4053099003)(8096899003)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?MZU6HEJYh5hVmzao7dbLfd/iHoocs6zKQAWOBKjSujjbv/soKXcGJeO1NX?=
+ =?iso-8859-1?Q?1vx/4AkI+6dAfamKh4i+u4VsJ0ryXmgKHWXO3Azfz4T8NRjlGqAmFNvhKk?=
+ =?iso-8859-1?Q?FuLd4+yXixoJ41vyi33Jh3ON84QJgsjKgqX9KgvuUFkjuIEvvko4CiFWoY?=
+ =?iso-8859-1?Q?le7xqfrHLGTaRe9DnhZXG3HMaXzVwoGErUroncAbtTUCaDwiaHfIp+mRea?=
+ =?iso-8859-1?Q?JV9NFjVzYrenb4lvptDvJzkizPFIRGtPyrtv/XjmJdDWjrtk8dADTMz1jj?=
+ =?iso-8859-1?Q?kuAF1CsefA/gsOkULrJGWOxJqQbj/ZVhJSCi6yBCQZvBXQ2Dnj0pYzS8aC?=
+ =?iso-8859-1?Q?0k/U3wGhEOGAwA0CRn90heEJ00KCoYnfzGgNg478AttbgycfqZyE5EC8rq?=
+ =?iso-8859-1?Q?CIWGVWZrpFer+/0PXQKteX0wyhmevTpxfEJ9KT8PfvGAqzd7EPqA2vtjYh?=
+ =?iso-8859-1?Q?tlT0cZCWhpo9g6E4devIdYJGtz+Zti8MZ5A4xo/+1URMFi+0va0efDOkQp?=
+ =?iso-8859-1?Q?Fwn9gsUTxpFI5ksN0asWg4exJfaHfdfptm6X4bc31+bkmpmA199J7Wxmhb?=
+ =?iso-8859-1?Q?Q9SS2nF4Rvx6fRg0rsBMa+6GmP+wjSDWYmcgJuXIxbAdkXCP038TaJ5uLk?=
+ =?iso-8859-1?Q?3QUgRS4qGYxgGDQdABIy5LmPi61P4HRkuQG4rQx9S2YAHKCfwa5Tb7PyzK?=
+ =?iso-8859-1?Q?bkPSupWmA7z+IA1k4FJUs67GDsMR/gFh485xm7i3SOKhlMfBomgdqn25Uf?=
+ =?iso-8859-1?Q?UDJad9VkFh2pkCp/9JhxLRIgRFyKI12sYAJGFRHRNYkbS9CNW1I6HTXf8I?=
+ =?iso-8859-1?Q?RQZH9qR857B5jA/go6uU4OYiD8urE6nYRsa92Yt8SJYr5BXHqR53Y9HcfF?=
+ =?iso-8859-1?Q?gGg5PVbeO2Qlyrjr1oFhb5s2Wz3HRIqe7QAW2fc6lN/vEETGVksBH4eQ6O?=
+ =?iso-8859-1?Q?pBguxBz0tFGRYxsInlWVpJ8q3A5dvLkUfwAv9lQ41cuJeAoxvVco7l2fHo?=
+ =?iso-8859-1?Q?2vSXrGEhR1sHxjjPBpsqwQILh2ipbrnem4PZ9FMUwtOlAcEbqx5Ry6DMY7?=
+ =?iso-8859-1?Q?bXRCrDj5q3Ah0ckTVugU23DJZ0ZMOfa9ZsTRtD2gVSuWhb8LsoEyrpDp2l?=
+ =?iso-8859-1?Q?iTWj8FGht51k/8qDz10q8HNk6z99WGwbVkufroPRvVpmVQ9tnfToEpJ2eT?=
+ =?iso-8859-1?Q?gz8OX5LbSGmnzFMcueM0ojaclidKWtwCrR948Cx6DfxW9AHL06zNZ6lQZx?=
+ =?iso-8859-1?Q?Fl2S3DNO2sFQa8RipKdaqvC6JIkPoAv9bnqbajMvPq+8myMifxwOVX0cZF?=
+ =?iso-8859-1?Q?lwlS/BFHnS6gusgvemG6GxyQyCmBF9G+OxbA3U2BTRTJjpK1GlmcEicFfQ?=
+ =?iso-8859-1?Q?w1jpdiq6BK4GXUI2C6MxXB45yqRwkevZQsGeguBACYm8vl7R0L3sxYmcRR?=
+ =?iso-8859-1?Q?PMSYri4p5/9LmDb2dfFNKCs/4S543OiTjxdEdvAcKpSaCTZkUj8xfoZoFH?=
+ =?iso-8859-1?Q?PfhwCSPLaCDDKBXNepDcIXNh4jo5B9HZ1P9sA1kfE4MoiEiHiRRpVg2ij+?=
+ =?iso-8859-1?Q?CIz2lK3R2R4YK/Vjo/Qlls3msF95NAjMSIDT32e4UWELIFNQMMXWJX06LU?=
+ =?iso-8859-1?Q?q0LVbmbt2N9H0Ur308UzlBt28YGTyf+MoIJOLqaqCPpNztptWlJpHWuWaA?=
+ =?iso-8859-1?Q?fqEtHqkoc7I6f3zf5AUp2OB5SkT2dIqbjPSpikXE?=
+Content-Type: multipart/mixed;
+	boundary="_004_SYBPR01MB6872C22DC3A828D68E8F8F84DA852SYBPR01MB6872ausp_"
+MIME-Version: 1.0
+X-OriginatorOrg: qcif.edu.au
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SYBPR01MB6872.ausprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75b89be4-ee4e-46b8-480d-08dd83697296
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Apr 2025 19:51:47.3240 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: ccf26053-9023-46ce-9e1d-1f3719ab0a40
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: fZ/I/AenGwbxBjoB92+hPhjwpG/Brz+TfkOBTmoVHk5OKZjKMCshWNPUZj5um9zi/2/Srln1hyzU+OTjsCD47A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY2PPF884CCEC06
+X-AXIGEN-DK-Result: No records
+DomainKey-Status: no signature
+X-AXIGEN-DKIM-Result: Ok
+DKIM-Status: good
+Received-SPF: 
+X-AXIGEN-SPF-Result: Ok
+
+--_004_SYBPR01MB6872C22DC3A828D68E8F8F84DA852SYBPR01MB6872ausp_
+Content-Type: multipart/alternative;
+	boundary="_000_SYBPR01MB6872C22DC3A828D68E8F8F84DA852SYBPR01MB6872ausp_"
+
+--_000_SYBPR01MB6872C22DC3A828D68E8F8F84DA852SYBPR01MB6872ausp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+This email is to advise you that the following new Australian Government bu=
+siness opportunities have been issued on AusTender and match the preference=
+s you selected in your business profile.Note: This message was sent from an=
+ unmonitored email address. Please do not respond to this message.
+
+If you require technical assistance using AusTender, please contact the Aus=
+Tender Help Desk via email at tenders@finance.gov.au.
+
+--_000_SYBPR01MB6872C22DC3A828D68E8F8F84DA852SYBPR01MB6872ausp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: &quot;Segoe UI&quot;, &=
+quot;Segoe UI Web (West European)&quot;, &quot;Helvetica Neue&quot;, sans-s=
+erif; font-size: 11pt; color: rgb(51, 51, 51);">
+This email is to advise you that the following new Australian Government bu=
+siness opportunities have been issued on AusTender and match the preference=
+s you selected in your business profile.Note: This message was sent from an=
+ unmonitored email address. Please
+ do not respond to this message.</div>
+<div style=3D"font-size: 11pt;"><br>
+If you require technical assistance using AusTender, please contact the Aus=
+Tender Help Desk via email at tenders@finance.gov.au.</div>
+</body>
+</html>
+
+--_000_SYBPR01MB6872C22DC3A828D68E8F8F84DA852SYBPR01MB6872ausp_--
+
+--_004_SYBPR01MB6872C22DC3A828D68E8F8F84DA852SYBPR01MB6872ausp_
+Content-Type: text/csv; name="2025-04-25-Approaches-to-Market.csv"
+Content-Description: 2025-04-25-Approaches-to-Market.csv
+Content-Disposition: attachment;
+	filename="2025-04-25-Approaches-to-Market.csv"; size=454;
+	creation-date="Thu, 24 Apr 2025 18:50:32 GMT";
+	modification-date="Thu, 24 Apr 2025 19:51:07 GMT"
+Content-ID: <73F39BE5644F9745ACAC71B3A7B0FD4D@ausprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
+
+77u/QVRNIElELEFUTSBUaXRsZSxDYXRlZ29yeSxBZ2VuY3ksVVJMDQpOR0EyNC0wNzEsU3RvcmFn
+ZSBhbmQgTG9naXN0aWNzIFNlcnZpY2VzIGZvciBOb24tQXJ0IEl0ZW1zLFNwZWNpYWxpc2VkIHdh
+cmVob3VzaW5nIGFuZCBzdG9yYWdlLE5hdGlvbmFsIEdhbGxlcnkgb2YgQXVzdHJhbGlhLGh0dHBz
+Oi8vd3d3LnRlbmRlcnMuZ292LmF1L0F0bS9TaG93LzI2NzgyNDk4LTYyZmEtNGEyZi1hNjVmLTM3
+YjU2MjE5N2I1YQ0KQW50YXJjdGljIEFUTTI1Lzg0MCxBVE0gMjUvODQwIFRlY2huaWNhbCBXcml0
+aW5nIFNlcnZpY2VzLFRlY2huaWNhbCB3cml0aW5nLERlcGFydG1lbnQgb2YgQ2xpbWF0ZSBDaGFu
+Z2UgIEVuZXJneSAgdGhlIEVudmlyb25tZW50IGFuZCBXYXRlcixodHRwczovL3d3dy50ZW5kZXJz
+Lmdvdi5hdS9BdG0vU2hvdy9jOTVhYTg0NS02NmM4LTQ5OTYtODljZi00YTNjY2QxZWE5ZWINCg==
+
+--_004_SYBPR01MB6872C22DC3A828D68E8F8F84DA852SYBPR01MB6872ausp_--
