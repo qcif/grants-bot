@@ -4,3 +4,18 @@
   become: true
   roles:
     - postfix
+  post_tasks:
+    - name: Add ubuntu user to vmail group
+      user:
+        name: ubuntu
+        groups: vmail
+        append: yes
+
+    - name: Set correct permissions on mail directory
+      file:
+        path: /var/mail/vhosts/grants.qfab.org
+        state: directory
+        owner: vmail
+        group: vmail
+        mode: '0775'
+        recurse: yes
