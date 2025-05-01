@@ -70,12 +70,14 @@ def analyze_mail_file(mail_path: str) -> List[TenderAnalysis]:
     mail_content = read_mail_file(mail_path)
     csv_data = extract_csv_from_email(mail_content)
     if not csv_data:
-        raise ValueError("No CSV data found in email")
+        print("No CSV data found in email")
+        return []
 
     # Extract URLs from CSV data
     urls = extract_urls_from_csv(csv_data)
     if not urls:
-        raise ValueError("No URLs found in CSV data")
+        print("No URLs found in CSV data")
+        return []
 
     # Process each URL
     results = []

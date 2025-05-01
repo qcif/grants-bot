@@ -29,6 +29,7 @@ class Config:
     smtp_password: str
     notification_email: str
     postfix_mail_dir: str
+    postfix_read_dir: str
 
 
 def load_config() -> Config:
@@ -47,7 +48,8 @@ def load_config() -> Config:
         'SMTP_USERNAME',
         'SMTP_PASSWORD',
         'NOTIFICATION_EMAIL',
-        'POSTFIX_MAIL_DIR'
+        'POSTFIX_MAIL_DIR',
+        'POSTFIX_READ_DIR',
     ]
 
     config_values = {}
@@ -112,7 +114,7 @@ def process_mail_dir() -> None:
     mail_path = Path(config.postfix_mail_dir)
     if not mail_path.exists():
         print(
-            f"Mail directory not found: {config.postfix_mail_dir}",
+            f"Error: Mail directory not found: {config.postfix_mail_dir}",
             file=sys.stderr)
         return
 
@@ -136,17 +138,16 @@ def process_mail_dir() -> None:
                             result.score,
                         )
 
-                # Archive the processed mail file
-                archive_dir = mail_path / 'processed'
-                archive_dir.mkdir(exist_ok=True)
-                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-                mail_file.rename(archive_dir / f"{mail_file.name}.{timestamp}")
 
             except Exception as e:
                 print(
                     f"Error processing {mail_file.name}: {e}",
                     file=sys.stderr,
                 )
+            # Archive the processed mail file
+            archive_dir = config.postfix_read_dir
+            archive_dir.mkdir(exist_ok=True, parents=True)
+            mail_file.rename(archive_dir / mail_file.name)
 
 
 def main():
