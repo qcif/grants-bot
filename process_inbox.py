@@ -6,7 +6,6 @@ Sends a notification email if any matching tenders are found.
 import os
 import sys
 from pathlib import Path
-from datetime import datetime
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -28,8 +27,8 @@ class Config:
     smtp_username: str
     smtp_password: str
     notification_email: str
-    postfix_mail_dir: str
-    postfix_read_dir: str
+    postfix_mail_dir: Path
+    postfix_read_dir: Path
 
 
 def load_config() -> Config:
@@ -43,21 +42,37 @@ def load_config() -> Config:
     """
 
     required_vars = [
-        'SMTP_HOSTNAME',
-        'SMTP_PORT',
-        'SMTP_USERNAME',
-        'SMTP_PASSWORD',
-        'NOTIFICATION_EMAIL',
-        'POSTFIX_MAIL_DIR',
-        'POSTFIX_READ_DIR',
+        {
+            'name': 'SMTP_HOSTNAME',
+        },
+        {
+            'name': 'SMTP_PORT',
+        },
+        {
+            'name': 'SMTP_USERNAME',
+        },
+        {
+            'name': 'SMTP_PASSWORD',
+        },
+        {
+            'name': 'NOTIFICATION_EMAIL',
+        },
+        {
+            'name': 'POSTFIX_MAIL_DIR',
+            'type': Path,
+        },
+        {
+            'name': 'POSTFIX_READ_DIR',
+            'type': Path,
+        },
     ]
 
     config_values = {}
     for var in required_vars:
-        value = os.getenv(var)
+        value = os.getenv(var['name'])
         if not value:
             raise ValueError(f"Missing required environment variable: {var}")
-        config_values[var.lower()] = value
+        config_values[var.lower()] = var.get('type', str)(value)
 
     return Config(**config_values)
 
@@ -111,7 +126,7 @@ def process_mail_dir() -> None:
         mail_dir: Path to the directory containing mail files.
     """
     config = load_config()
-    mail_path = Path(config.postfix_mail_dir)
+    mail_path = config.postfix_mail_dir
     if not mail_path.exists():
         print(
             f"Error: Mail directory not found: {config.postfix_mail_dir}",
