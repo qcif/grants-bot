@@ -17,7 +17,7 @@ from src.read_mail import analyze_mail_file
 from src.scrape_tender import TenderDetails
 
 load_dotenv()
-MIN_TENDER_SCORE = 6
+MIN_TENDER_SCORE = 7
 
 
 @dataclass
@@ -80,12 +80,14 @@ def send_notification(
 
     # Create email body
     body = f"""
-    High-Scoring Tender Alert (Score: {score}/10)
+High-Scoring Tender Alert (Score: {score}/10)
 
-    Agency: {tender.agency}
-    Category: {tender.category}
-    Description: {tender.description}
-    """
+{tender.url}
+
+Agency: {tender.agency}
+Category: {tender.category}
+Description: {tender.description}
+"""
 
     msg.attach(MIMEText(body, 'plain'))
 

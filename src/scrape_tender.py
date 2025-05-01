@@ -9,9 +9,10 @@ from bs4 import BeautifulSoup
 @dataclass
 class TenderDetails:
     """Data class to store tender details."""
-    description: str
-    category: str
     agency: str
+    category: str
+    description: str
+    url: str
 
 
 def clean_text(text: str) -> str:
@@ -28,7 +29,7 @@ def clean_text(text: str) -> str:
     return text
 
 
-def extract_tender_details(html: str) -> Optional[TenderDetails]:
+def extract_tender_details(url: str, html: str) -> Optional[TenderDetails]:
     """Extract tender details from AusTender HTML.
 
     Args:
@@ -59,7 +60,8 @@ def extract_tender_details(html: str) -> Optional[TenderDetails]:
     return TenderDetails(
         description=details.get('Description', ''),
         category=details.get('Category', ''),
-        agency=details.get('Agency', '')
+        agency=details.get('Agency', ''),
+        url=url,
     )
 
 
@@ -88,7 +90,7 @@ def scrape_tender(url: str) -> Optional[TenderDetails]:
     response = requests.get(url, headers=headers)
     response.raise_for_status()
 
-    return extract_tender_details(response.text)
+    return extract_tender_details(url, response.text)
 
 
 if __name__ == "__main__":
