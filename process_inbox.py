@@ -69,10 +69,12 @@ def load_config() -> Config:
 
     config_values = {}
     for var in required_vars:
-        value = os.getenv(var['name'])
+        name = var['name']
+        _type = var.get('type', str)
+        value = os.getenv(name)
         if not value:
             raise ValueError(f"Missing required environment variable: {var}")
-        config_values[var.lower()] = var.get('type', str)(value)
+        config_values[name.lower()] = _type(value)
 
     return Config(**config_values)
 
