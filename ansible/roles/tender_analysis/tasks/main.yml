@@ -55,6 +55,12 @@
     state: directory
     mode: '0755'
 
+- name: Create symlink to inbox directory
+  file:
+    src: /var/mail/vhosts/grants.qfab.org
+    dest: /opt/tender_analysis/inbox
+    state: link
+
 - name: Create cron job
   cron:
     name: "Run tender analysis script"

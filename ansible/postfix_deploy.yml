@@ -4,18 +4,21 @@
   become: true
   roles:
     - postfix
+  vars_files:
+    - group_vars/vars.yml
   post_tasks:
     - name: Add ubuntu user to vmail group
       user:
         name: ubuntu
         groups: vmail
         append: yes
-
-    - name: Set correct permissions on mail directory
-      file:
-        path: /var/mail/vhosts/grants.qfab.org
-        state: directory
-        owner: vmail
-        group: vmail
-        mode: '0775'
-        recurse: yes
+    - name: Find all inbox directories recursively
+      ansible.builtin.find:
+        paths: "{{ postfix_inbox_dir }}"
+        file_type: directory
+      register: inbox_dirs
+    - name: Set mode 0750 on inbox dirs
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: '0750'
+      loop: "{{ inbox_dirs.files }}"
