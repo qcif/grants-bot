@@ -23,7 +23,7 @@ MIN_TENDER_SCORE = 6
 @dataclass
 class Config:
     """Configuration for the email processing system."""
-    smtp_server: str
+    smtp_hostname: str
     smtp_port: str
     smtp_username: str
     smtp_password: str
