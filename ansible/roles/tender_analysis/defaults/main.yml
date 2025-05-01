@@ -1,0 +1,8 @@
+---
+# Application settings
+app_dir: /opt/tender_analysis
+log_dir: /var/log/tender_analysis
+
+# Cron job settings
+cron_minute: "0"
+cron_hour: "*/6"

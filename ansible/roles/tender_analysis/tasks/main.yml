@@ -1,0 +1,64 @@
+---
+- name: Install required system packages
+  apt:
+    name:
+      - software-properties-common
+      - git
+      - python3.12
+      - python3.12-venv
+      - python3-pip
+    state: present
+    update_cache: yes
+
+- name: Add deadsnakes PPA for Python 3.12
+  apt_repository:
+    repo: ppa:deadsnakes/ppa
+    state: present
+    update_cache: yes
+
+- name: Create application directory
+  file:
+    path: /opt/tender_analysis
+    state: directory
+    mode: '0755'
+
+- name: Clone repository
+  git:
+    repo: https://github.com/qcif/grants-bot.git
+    dest: /opt/tender_analysis
+    version: main
+    force: yes
+
+- name: Create virtual environment with Python 3.12
+  command: python3.12 -m venv /opt/tender_analysis/venv
+  args:
+    creates: /opt/tender_analysis/venv
+
+- name: Install Python dependencies in venv
+  command: >
+    /opt/tender_analysis/venv/bin/python
+    -m pip
+    install
+    -r "{{ app_dir }}/requirements.txt"
+  args:
+    creates: /opt/tender_analysis/venv/lib/python3.12/site-packages/beautifulsoup4
+
+- name: Copy .env file
+  copy:
+    src: .env
+    dest: /opt/tender_analysis/.env
+    mode: '0600'
+
+- name: Create log directory
+  file:
+    path: /var/log/tender_analysis
+    state: directory
+    mode: '0755'
+
+- name: Create cron job
+  cron:
+    name: "Run tender analysis script"
+    minute: "0"
+    hour: "*/6"
+    job: "cd /opt/tender_analysis && /opt/tender_analysis/venv/bin/python process_inbox.py >> /var/log/tender_analysis/tender_analysis.log 2>&1"
+    state: present

@@ -1,0 +1,8 @@
+---
+- name: Deploy Tender Analysis System
+  hosts: mail_servers
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - tender_analysis
