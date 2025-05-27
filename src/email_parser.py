@@ -1,6 +1,7 @@
 """Module for parsing emails and extracting attachments."""
 import base64
 import email
+import quopri
 from email import policy
 from typing import Optional, List
 import csv
@@ -63,7 +64,7 @@ def decode_csv_attachment(
     if encoding == "base64":
         content = base64.b64decode(content).decode("utf-8")
     elif encoding == "quoted-printable":
-        content = email.message.decode_quoted_printable(content)
+        content = quopri.decodestring(content)
     else:
         content = content.decode("utf-8")
 
