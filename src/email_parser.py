@@ -62,11 +62,11 @@ def decode_csv_attachment(
 
     # Decode based on the encoding
     if encoding == "base64":
-        content = base64.b64decode(content).decode("utf-8")
+        content = base64.b64decode(content).decode("utf-8-sig")
     elif encoding == "quoted-printable":
-        content = quopri.decodestring(content)
+        content = quopri.decodestring(content).decode("utf-8-sig")
     else:
-        content = content.decode("utf-8")
+        content = content.decode("utf-8-sig")
 
     # Parse the CSV content
     csv_file = StringIO(content)
