@@ -144,6 +144,8 @@ def process_mail_dir() -> None:
 
                 # Check for high-scoring tenders
                 for result in results:
+                    print(f"Analysing tender: {result.tender.url}")
+                    print(f"Score returned: {result.score}")
                     if result.score > MIN_TENDER_SCORE:
                         print(
                             "Found high-scoring tender:",
@@ -154,7 +156,6 @@ def process_mail_dir() -> None:
                             result.tender,
                             result.score,
                         )
-
 
             except Exception as e:
                 print(
