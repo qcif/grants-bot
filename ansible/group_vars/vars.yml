@@ -1,2 +1,2 @@
-postfix_inbox_dir : /var/mail/vhosts/grants.qfab.org
+postfix_inbox_dir : /var/mail/vhosts/grants.qfab.org/bot/Maildir
 cron_hour: "23"  # 9am AEST
